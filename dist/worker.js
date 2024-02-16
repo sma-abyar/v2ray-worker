@@ -3784,7 +3784,7 @@ function GetVlessConfig(no, uuid2, sni, address, port) {
     address = sni;
   }
   return {
-    name: `${no}-vless-worker-${address}`,
+    name: `${no}-vless-Free-StableConnectionVPN`,
     type: "vless",
     tls: false,
     network: "ws",
