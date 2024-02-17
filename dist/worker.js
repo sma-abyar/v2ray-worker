@@ -4416,7 +4416,7 @@ async function GetPanel(request, env) {
         <div class="p-1 bg-primary text-white">
           <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
           <div class="text-nowrap fs-6 text-center">
-            Version 2.4 by
+            Version 2.5 by
             <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
           </div>
         </div>
@@ -4555,7 +4555,7 @@ async function GetPanel(request, env) {
           <div class="p-1 bg-primary text-white">
           <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
             <div class="text-nowrap fs-6 text-center">
-              Version 2.4 by
+              Version 2.5 by
               <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
             </div>
           </div>
@@ -4667,7 +4667,7 @@ async function GetLogin(request, env) {
         <div class="p-3 bg-primary text-white">
         <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
         <div class="text-nowrap fs-6 text-center">
-            Version 2.4 by
+            Version 2.5 by
             <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
           </div>
         </div>
