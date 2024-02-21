@@ -3778,14 +3778,20 @@ function IsIp(str2) {
 function IsValidUUID(uuid2) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid2);
 }
-function GetVlessConfig(no, uuid2, sni, address, port) {
+function GetVlessConfig(no, uuid2, sni, address, port, TLS) {
   if (address.toLowerCase() == sni.toLowerCase()) {
     address = sni;
   }
+  let configName;
+  if (TLS) {
+    configName = `${no}-vless-TLS-Free-StableConnectionVPN`;
+  } else {
+    configName = `${no}-vless-NoTLS-Free-StableConnectionVPN`;
+  }
   return {
-    name: `${no}-vless-Free-StableConnectionVPN`,
+    name: configName,
     type: "vless",
-    tls: false,
+    tls: TLS,
     network: "ws",
     port,
     servername: sni,
@@ -3880,13 +3886,21 @@ var defaultPFList = [
   "android",
   "randomized"
 ];
-var cfPorts = [
+var cfHttpPorts = [
   80,
   8080,
   2052,
   2082,
   2086,
   2095
+];
+var cfHttpsPorts = [
+  443,
+  2053,
+  2083,
+  2087,
+  2096,
+  8443
 ];
 var supportedCiphers = [
   "none",
@@ -3948,7 +3962,16 @@ async function GetVlessConfigList(sni, addressList, max, env) {
         uuid2,
         MuddleDomain(sni),
         addressList[Math.floor(Math.random() * addressList.length)],
-        cfPorts[Math.floor(Math.random() * cfPorts.length)]
+        cfHttpPorts[Math.floor(Math.random() * cfHttpPorts.length)],
+        false
+      ));
+      configList.push(GetVlessConfig(
+        i + 1,
+        uuid2,
+        MuddleDomain(sni),
+        addressList[Math.floor(Math.random() * addressList.length)],
+        cfHttpsPorts[Math.floor(Math.random() * cfHttpPorts.length)],
+        true
       ));
     }
   }
@@ -7463,7 +7486,7 @@ function MixConfig(cnf, url, address, provider) {
     if (!conf.port) {
       conf.port = 443;
     }
-    if (!cfPorts.includes(conf.port)) {
+    if (!cfHttpPorts.includes(conf.port)) {
       return null;
     }
     if (addr.toLocaleLowerCase().endsWith(".workers.dev") && conf.path) {
@@ -7500,7 +7523,7 @@ function EncodeConfig(conf) {
         aid: conf.alterId || 0,
         cipher: conf.cipher || "none",
         tls: conf.tls ? "tls" : null,
-        "skip-cert-verify": conf["skip-cert-verify"],
+        "skip-cert-verify": false,
         sni: conf.servername,
         net: conf.network,
         path: conf.path,
@@ -7538,7 +7561,7 @@ function DecodeConfig(configStr) {
         alterId: conf?.aid || 0,
         cipher: conf?.cipher || "auto",
         tls: conf?.tls == "tls",
-        "skip-cert-verify": true,
+        "skip-cert-verify": false,
         servername: conf?.sni || conf?.host,
         network: conf?.net,
         path: conf?.path || "",
