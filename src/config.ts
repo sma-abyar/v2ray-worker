@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer'
 import { IsIp, IsValidUUID, MuddleDomain } from "./helpers"
-import { cfPorts, supportedCiphers } from "./variables"
+import { cfHttpPorts, supportedCiphers } from "./variables"
 import { Config } from "./interfaces"
 
 export function MixConfig(cnf: Config, url: URL, address: string, provider: string): Config | null {
@@ -26,7 +26,7 @@ export function MixConfig(cnf: Config, url: URL, address: string, provider: stri
 			conf.port = 443
 		}
 
-		if (!cfPorts.includes(conf.port)) {
+		if (!cfHttpPorts.includes(conf.port)) {
 			return null
 		}
 

@@ -36,13 +36,22 @@ export const defaultPFList: Array<string> = [
   "randomized",
 ]
 
-export const cfPorts: Array<number> = [
+export const cfHttpPorts: Array<number> = [
 	80,
 	8080,
 	2052,
 	2082,
 	2086,
 	2095,
+]
+
+export const cfHttpsPorts: Array<number> = [
+	443,
+	2053,
+	2083,
+	2087,
+	2096,
+	8443,
 ]
 
 export const supportedCiphers: Array<string> = [
