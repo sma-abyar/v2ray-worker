@@ -4,7 +4,6 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var customPort = "2052";
 var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
   get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
 }) : x)(function(x) {
@@ -3818,6 +3817,13 @@ function RemoveDuplicateConfigs(configList) {
     return false;
   });
 }
+function AddNumberToConfigs(configList, start) {
+  const seen = {};
+  return configList.map((conf, index) => {
+    conf.name = index + start + "-" + conf.name;
+    return conf;
+  });
+}
 function GenerateToken(length = 32) {
   const buffer = new Uint8Array(length);
   for (let i = 0; i < length; i++) {
@@ -3841,6 +3847,7 @@ function MuddleDomain(hostname) {
 // src/variables.ts
 init_modules_watch_stub();
 var defaultProviders = [
+  "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/list/00.txt",
   "https://raw.githubusercontent.com/sashalsk/V2Ray/main/V2Config_64base",
   "https://raw.githubusercontent.com/Leon406/SubCrawler/master/sub/share/vless",
   "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml",
@@ -3874,12 +3881,12 @@ var defaultPFList = [
   "randomized"
 ];
 var cfPorts = [
-  443,
-  2053,
-  2083,
-  2087,
-  2096,
-  8443
+  80,
+  8080,
+  2052,
+  2082,
+  2086,
+  2095
 ];
 var supportedCiphers = [
   "none",
@@ -4409,7 +4416,8 @@ async function GetPanel(request, env) {
     <html>
     <head>
       <meta charset="utf8" />
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"><\/script>
     </head>
     <body dir="ltr">
       <div class="container border p-0">
@@ -4492,8 +4500,24 @@ async function GetPanel(request, env) {
               One IP or subdomain per line. / \u062F\u0631 \u0647\u0631 \u0633\u0637\u0631 \u06CC\u06A9 \u0622\u06CC\u200C\u067E\u06CC \u06CC\u0627 \u0633\u0627\u0628\u200C\u062F\u0627\u0645\u06CC\u0646 \u0648\u0627\u0631\u062F \u06A9\u0646\u06CC\u062F.
             </div>
             <div>
-              <a href="https://vfarid.github.io/cf-ip-scanner" target="_blank">Find Clean IP / \u062C\u0633\u062A\u062C\u0648\u06CC \u0622\u06CC\u200C\u067E\u06CC \u062A\u0645\u06CC\u0632</a>
-            </div>
+              <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ip-scanner-modal">
+                Find clean IPs / \u067E\u06CC\u062F\u0627 \u06A9\u0631\u062F\u0646 \u0622\u06CC\u200C\u067E\u06CC \u062A\u0645\u06CC\u0632
+              </button>
+              <div class="modal fade" id="ip-scanner-modal" tabindex="-1" aria-labelledby="ip-scanner-modal-label" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                        Close / \u0628\u0633\u062A\u0646  
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <iframe src="https://vfarid.github.io/cf-ip-scanner/" style="width: 100%; height: 90vh;"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
           </div>
           <div class="mb-1 p-1">
             <label for="alpn-list" class="form-label fw-bold">
@@ -4537,6 +4561,11 @@ async function GetPanel(request, env) {
         </form>
       </div>
     </body>
+    <script>
+      window.addEventListener('message', function (event) {
+        document.getElementById('clean-ip').value = event.data;
+      });
+    <\/script>
     </html>
     `;
     return new Response(htmlContent, {
@@ -4553,7 +4582,7 @@ async function GetPanel(request, env) {
       <body dir="ltr">
         <div class="container border p-0">
           <div class="p-1 bg-primary text-white">
-          <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
+            <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
             <div class="text-nowrap fs-6 text-center">
               Version 2.5 by
               <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
@@ -4665,8 +4694,8 @@ async function GetLogin(request, env) {
     <body dir="ltr">
       <div class="container border p-0">
         <div class="p-3 bg-primary text-white">
-        <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
-        <div class="text-nowrap fs-6 text-center">
+          <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
+          <div class="text-nowrap fs-6 text-center">
             Version 2.5 by
             <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
           </div>
@@ -7471,7 +7500,7 @@ function EncodeConfig(conf) {
         aid: conf.alterId || 0,
         cipher: conf.cipher || "none",
         tls: conf.tls ? "tls" : null,
-        "skip-cert-verify": false,
+        "skip-cert-verify": conf["skip-cert-verify"],
         sni: conf.servername,
         net: conf.network,
         path: conf.path,
@@ -7484,11 +7513,11 @@ function EncodeConfig(conf) {
       };
       return `${config.type}://${import_buffer.Buffer.from(JSON.stringify(config), "utf-8").toString("base64")}`;
     } else if (conf.type == "vless") {
-      return `${conf.type}://${conf.uuid || conf.password}@${conf.server}:${conf.port}?encryption=${encodeURIComponent(conf.cipher || "none")}&type=${conf.network || "tcp"}&path=${encodeURIComponent(conf.path || "")}&host=${encodeURIComponent(conf.host || conf.server)}${conf.alpn ? "&alpn=" + encodeURIComponent(conf.alpn) : ""}${conf.fp ? "&fp=" + encodeURIComponent(conf.fp) : ""}${conf.tls ? "&security=tls" : ""}&sni=${encodeURIComponent(conf.servername || conf.host || conf.server)}#${encodeURIComponent(conf.name)}`;
+      return `${conf.type}://${conf.uuid || conf.password}@${conf.server}:${conf.port}?encryption=${encodeURIComponent(conf.cipher || "none")}&type=${conf.network || "tcp"}${conf.path ? "&path=" + encodeURIComponent(conf.path) : ""}${conf.host ? "&host=" + encodeURIComponent(conf.host) : ""}${conf.security ? "&security=" + encodeURIComponent(conf.security) : ""}${conf.pbk ? "&pbk=" + encodeURIComponent(conf.pbk) : ""}${conf.headerType ? "&headerType=" + encodeURIComponent(conf.headerType) : ""}${conf.alpn ? "&alpn=" + encodeURIComponent(conf.alpn) : ""}${conf.fp ? "&fp=" + encodeURIComponent(conf.fp) : ""}${conf.tls ? "&security=tls" : ""}&sni=${encodeURIComponent(conf.servername || conf.host || conf.server)}#${encodeURIComponent(conf.name)}`;
     } else if (conf.type == "trojan") {
-      return `${conf.type}://${conf.password || conf.uuid}@${conf.server}:${conf.port}?cipher=${encodeURIComponent(conf.cipher || "none")}&type=${conf.type}${conf.path ? "&path=" + encodeURIComponent(conf.path) : ""}&host=${encodeURIComponent(conf.host || conf.server)}${conf.alpn ? "&alpn=" + encodeURIComponent(conf.alpn) : ""}${conf.fp ? "&fp=" + encodeURIComponent(conf.fp) : ""}${conf.tls ? "&tls=1" : ""}&sni=${encodeURIComponent(conf.servername || conf.host || conf.server)}#${encodeURIComponent(conf.name)}`;
+      return `${conf.type}://${conf.password || conf.uuid}@${conf.server}:${conf.port}?type=${conf.network}${conf.cipher ? "&cipher=" + encodeURIComponent(conf.cipher) : ""}${conf.path ? "&path=" + conf.path : ""}${conf.host ? "&Host=" + conf.host : ""}${conf.alpn ? "&alpn=" + encodeURIComponent(conf.alpn) : ""}${conf.fp ? "&fp=" + encodeURIComponent(conf.fp) : ""}${conf.tls ? "&tls=1" : ""}&sni=${encodeURIComponent(conf.servername || conf.host || conf.server)}#${encodeURIComponent(conf.name)}`;
     } else if (conf.type == "ss") {
-      return `${conf.type}://${conf.password || conf.uuid}@${conf.server}:${conf.port}?cipher=${encodeURIComponent(conf.cipher || "none")}&type=${conf.type}${conf.path ? "&path=" + encodeURIComponent(conf.path) : ""}${conf.host ? "&host=" + encodeURIComponent(conf.host) : ""}${conf.tfo ? "&tfo=1" : ""}${conf.servername ? "&sni=" + encodeURIComponent(conf.servername) : ""}${conf.obfs ? "&obfs=" + encodeURIComponent(conf.obfs) : ""}${conf.protocol ? "&protocol=" + encodeURIComponent(conf.protocol) : ""}${conf["protocol-param"] ? "&protocol-param=" + encodeURIComponent(conf["protocol-param"]) : ""}${conf["obfs-param"] ? "&obfs-param=" + encodeURIComponent(conf["obfs-param"]) : ""}#${encodeURIComponent(conf.name)}`;
+      return `${conf.type}://${conf.password || conf.uuid}@${conf.server}:${conf.port || "80"}?cipher=${conf.cipher || "none"}${conf.path ? "&path=" + encodeURIComponent(conf.path) : ""}${conf.host ? "&host=" + encodeURIComponent(conf.host) : ""}${conf.tfo ? "&tfo=1" : ""}${conf.obfs ? "&obfs=" + encodeURIComponent(conf.obfs) : ""}${conf.protocol ? "&protocol=" + encodeURIComponent(conf.protocol) : ""}${conf["protocol-param"] ? "&protocol-param=" + encodeURIComponent(conf["protocol-param"]) : ""}${conf["obfs-param"] ? "&obfs-param=" + encodeURIComponent(conf["obfs-param"]) : ""}#${encodeURIComponent(conf.name)}`;
     }
   } catch (e) {
   }
@@ -7509,7 +7538,7 @@ function DecodeConfig(configStr) {
         alterId: conf?.aid || 0,
         cipher: conf?.cipher || "auto",
         tls: conf?.tls == "tls",
-        "skip-cert-verify": false,
+        "skip-cert-verify": true,
         servername: conf?.sni || conf?.host,
         network: conf?.net,
         path: conf?.path || "",
@@ -7526,7 +7555,7 @@ function DecodeConfig(configStr) {
       };
     } catch (e) {
     }
-  } else if (match = configStr.match(/^(?<type>trojan|vless):\/\/(?<id>.*)@(?<server>.*):(?<port>\d+)\??(?<options>.*)#(?<ps>.*)$/)) {
+  } else if ((match = configStr.match(/^(?<type>trojan|vless):\/\/(?<id>.*)@(?<server>.*):(?<port>\d+)\??(?<options>.*)#(?<ps>.*)$/)) && match.groups) {
     try {
       const optionsArr = match.groups.options.split("&") ?? [];
       const optionsObj = optionsArr.reduce((obj, option) => {
@@ -7535,25 +7564,28 @@ function DecodeConfig(configStr) {
         return obj;
       }, {});
       conf = {
-        name: match.groups?.ps,
-        server: match.groups?.server,
-        port: match.groups.port ?? 443,
+        name: match.groups.ps,
+        server: match.groups.server,
+        port: match.groups.port || 443,
         type: match.groups.type,
         uuid: match.groups.id,
-        alterId: conf.aid ?? 0,
+        alterId: optionsObj.aid || 0,
         cipher: "auto",
-        tls: (optionsObj.security ?? "none") == "tls",
+        security: optionsObj.security || "",
+        tls: (optionsObj.security || "none") == "tls",
         "skip-cert-verify": false,
-        servername: optionsObj?.sni,
-        network: optionsObj.type ?? (optionsObj.net ?? "tcp"),
-        path: optionsObj?.path,
-        host: optionsObj?.host,
-        alpn: optionsObj?.alpn,
-        fp: optionsObj?.fp || "randomized",
+        servername: optionsObj.sni || "",
+        network: optionsObj.type || (optionsObj.net || "tcp"),
+        path: optionsObj.path || "",
+        host: optionsObj.host || optionsObj.Host || "",
+        alpn: optionsObj.alpn || "",
+        fp: optionsObj.fp || "",
+        pbk: optionsObj.pbk || "",
+        headerType: optionsObj.headerType || "",
         "ws-opts": {
-          path: conf?.path || "",
+          path: optionsObj.path || "",
           headers: {
-            Host: conf?.host || conf?.sni
+            Host: optionsObj.host || optionsObj.sni
           }
         },
         udp: true
@@ -7592,10 +7624,15 @@ async function GetConfigList(url, env) {
   let settingsNotAvailable = true;
   try {
     maxConfigs = parseInt(await env.settings.get("MaxConfigs") || "200");
-    maxVlessConfigs = Math.ceil(maxConfigs / 20);
+    if (maxConfigs > 200) {
+      maxVlessConfigs = Math.ceil(maxConfigs / 20);
+    }
     protocols = await env.settings.get("Protocols").then((val) => {
       return val ? val.split("\n") : [];
     });
+    if (protocols.includes("vless")) {
+      maxConfigs = maxConfigs - maxVlessConfigs;
+    }
     providers = await env.settings.get("Providers").then((val) => {
       return val ? val.split("\n") : [];
     });
@@ -7640,13 +7677,15 @@ async function GetConfigList(url, env) {
         if (!newConfigs.length) {
           throw "no-yaml";
         }
-        newConfigs = newConfigs.filter(ValidateConfig);
+        newConfigs = newConfigs.filter((cnf) => protocols.includes(cnf.type)).filter(ValidateConfig);
       } catch (e) {
         if (IsBase64(content)) {
           content = import_buffer2.Buffer.from(content, "base64").toString("utf-8");
         }
-        newConfigs = content.split("\n").filter((cnf) => cnf.match(/^(vmess|vless|trojan|ss):\/\//i));
-        newConfigs = newConfigs.map(DecodeConfig).filter(ValidateConfig);
+        newConfigs = content.split("\n").filter((cnf) => cnf.match(new RegExp(`^(${protocols.join("|")})://`, "i")));
+        if (newConfigs.length) {
+          newConfigs = newConfigs.map(DecodeConfig).filter(ValidateConfig);
+        }
       }
       if (includeMergedConfigs) {
         acceptableConfigList.push({
@@ -7660,7 +7699,7 @@ async function GetConfigList(url, env) {
         configList.push({
           url: providerUrl,
           count: configPerList,
-          configs: newConfigs.filter((cnf) => protocols.includes(cnf.type))
+          configs: newConfigs
         });
       }
     } catch (e) {
@@ -7715,13 +7754,18 @@ async function GetConfigList(url, env) {
       myConfigs.map(DecodeConfig)
     );
   }
+  finalConfigList = RemoveDuplicateConfigs(finalConfigList.filter(ValidateConfig));
   if (protocols.includes("vless")) {
+    finalConfigList = AddNumberToConfigs(finalConfigList, maxVlessConfigs + 1);
     finalConfigList = (await GetVlessConfigList(url.hostname, cleanDomainIPs, maxVlessConfigs, env)).concat(finalConfigList);
+  } else {
+    finalConfigList = AddNumberToConfigs(finalConfigList, 1);
   }
-  finalConfigList = finalConfigList.filter(ValidateConfig);
   if (alpnList.length) {
     finalConfigList = finalConfigList.map((conf) => {
-      conf.alpn = alpnList[Math.floor(Math.random() * alpnList.length)];
+      if (["vless", "vmess"].includes(conf.type) && conf.security != "reality") {
+        conf.alpn = alpnList[Math.floor(Math.random() * alpnList.length)];
+      }
       return conf;
     });
   }
@@ -7731,7 +7775,7 @@ async function GetConfigList(url, env) {
       return conf;
     });
   }
-  return RemoveDuplicateConfigs(finalConfigList);
+  return finalConfigList;
 }
 
 // src/clash.ts
