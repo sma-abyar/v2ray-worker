@@ -25,14 +25,20 @@ export function IsValidUUID(uuid: string): boolean {
 	return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid)
 }
 
-export function GetVlessConfig(no: number, uuid: UUID, sni: string, address: string, port: number) {
+export function GetVlessConfig(no: number, uuid: UUID, sni: string, address: string, port: number, TLS: boolean) {
 	if (address.toLowerCase() == sni.toLowerCase()) {
     address = sni
   }
+  	let configName;
+	if(TLS){
+		configName = `${no}-vless-TLS-Free-StableConnectionVPN`;
+	}else{
+		configName = `${no}-vless-NoTLS-Free-StableConnectionVPN`;
+	}
   return {
-		name: `${no}-vless-Free-StableConnectionVPN`,
+		name: configName,
 		type: "vless",
-		tls: false,
+		tls: TLS,
 		network: "ws",
 		port: port,
 		servername: sni,
