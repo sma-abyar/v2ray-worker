@@ -30,7 +30,7 @@ export function GetVlessConfig(no: number, uuid: UUID, sni: string, address: str
     address = sni
   }
   return {
-		name: `${no}-vless-Free-StableConnectionVPN`,
+		name: `${no}-vless-noTLS-Free-StableConnectionVPN`,
 		type: "vless",
 		tls: false,
 		network: "ws",
