@@ -31,16 +31,7 @@ export const defaultPFList: Array<string> = [
   "randomized",
 ]
 
-export const cfHttpPorts: Array<number> = [
-	80,
-	8080,
-	2052,
-	2082,
-	2086,
-	2095,
-]
-
-export const cfHttpsPorts: Array<number> = [
+export const cfPorts: Array<number> = [
 	443,
 	2053,
 	2083,

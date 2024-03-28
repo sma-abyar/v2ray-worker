@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-=======
 /*!
   * v2ray Subscription Worker v2.3
   * Copyright 2024 Vahid Farid (https://twitter.com/vahidfarid)
   * Licensed under GPLv3 (https://github.com/vfarid/v2ray-worker/blob/main/Licence.md)
   */
 
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -3822,36 +3819,6 @@ function parse(uuid2) {
   arr[15] = v & 255;
   return arr;
 }
-<<<<<<< HEAD
-function IsValidUUID(uuid2) {
-  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid2);
-}
-function GetVlessConfig(no, uuid2, sni, address, port, TLS) {
-  if (address.toLowerCase() == sni.toLowerCase()) {
-    address = sni;
-  }
-  let configName;
-  if (TLS) {
-    configName = `${no}-vless-TLS-Free-StableConnectionVPN`;
-  } else {
-    configName = `${no}-vless-NoTLS-Free-StableConnectionVPN`;
-  }
-  return {
-    name: configName,
-    type: "vless",
-    tls: TLS,
-    network: "ws",
-    port,
-    servername: sni,
-    uuid: uuid2,
-    fp: "randomized",
-    alpn: "h2,http/1.1",
-    host: sni,
-    "ws-opts": {
-      path: "vless-ws/?ed=2048",
-      headers: {
-        Host: sni
-=======
 var parse_default = parse;
 
 // node_modules/uuid/dist/esm-browser/v35.js
@@ -3887,7 +3854,6 @@ function v35(name, version2, hashfunc) {
       offset = offset || 0;
       for (let i = 0; i < 16; ++i) {
         buf[offset + i] = bytes[i];
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
       }
       return buf;
     }
@@ -3986,21 +3952,7 @@ var v5_default = v5;
 
 // src/variables.ts
 init_modules_watch_stub();
-<<<<<<< HEAD
-var defaultProviders = [
-  "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/list/00.txt",
-  "https://raw.githubusercontent.com/sashalsk/V2Ray/main/V2Config_64base",
-  "https://raw.githubusercontent.com/Leon406/SubCrawler/master/sub/share/vless",
-  "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml",
-  "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml",
-  "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml",
-  "https://raw.githubusercontent.com/mlabalabala/v2ray-node/main/nodefree4clash.txt",
-  "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt",
-  "https://raw.githubusercontent.com/mfuu/v2ray/master/v2ray"
-];
-=======
 var version = "2.3";
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
 var defaultProtocols = [
   "vmess",
   "built-in-vless"
@@ -4027,15 +3979,7 @@ var defaultPFList = [
   "android",
   "randomized"
 ];
-var cfHttpPorts = [
-  80,
-  8080,
-  2052,
-  2082,
-  2086,
-  2095
-];
-var cfHttpsPorts = [
+var cfPorts = [
   443,
   2053,
   2083,
@@ -4183,27 +4127,6 @@ var proxyIP = "";
 async function GetVlessConfigList(sni, addressList, max, env) {
   uuid = getUUID(sni);
   let configList = [];
-<<<<<<< HEAD
-  if (uuid2) {
-    for (let i = 0; i < max; i++) {
-      configList.push(GetVlessConfig(
-        i + 1,
-        uuid2,
-        MuddleDomain(sni),
-        addressList[Math.floor(Math.random() * addressList.length)],
-        cfHttpPorts[Math.floor(Math.random() * cfHttpPorts.length)],
-        false
-      ));
-      configList.push(GetVlessConfig(
-        i + 1,
-        uuid2,
-        MuddleDomain(sni),
-        addressList[Math.floor(Math.random() * addressList.length)],
-        cfHttpsPorts[Math.floor(Math.random() * cfHttpPorts.length)],
-        true
-      ));
-    }
-=======
   for (let i = 0; i < max; i++) {
     configList.push(GetVlessConfig(
       i + 1,
@@ -4212,7 +4135,6 @@ async function GetVlessConfigList(sni, addressList, max, env) {
       addressList[Math.floor(Math.random() * addressList.length)],
       cfPorts[Math.floor(Math.random() * cfPorts.length)]
     ));
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
   }
   return configList;
 }
@@ -4629,18 +4551,6 @@ async function GetPanel(request, env) {
     <html>
     <head>
       <meta charset="utf8" />
-<<<<<<< HEAD
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" rel="stylesheet" />
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"><\/script>
-    </head>
-    <body dir="ltr">
-      <div class="container border p-0">
-        <div class="p-1 bg-primary text-white">
-          <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
-          <div class="text-nowrap fs-6 text-center">
-            Version 2.6 by
-            <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
-=======
       <link rel="shortcut icon" type="image/ico" href="https://dash.cloudflare.com/favicon.ico" />
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" rel="stylesheet" />
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"><\/script>
@@ -4849,7 +4759,6 @@ async function GetPanel(request, env) {
         <div class="p-2 border-bottom border-primary border-2">
           <div class="text-nowrap fs-5 fw-bold text-dark">
             <span id="page-title"></span> &nbsp;&nbsp;<span class="text-nowrap fs-6 text-info"><span id="text-version"></span> ${version}</span>
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
           </div>
         </div>
         ${htmlMessage}
@@ -4905,24 +4814,12 @@ async function GetPanel(request, env) {
             <textarea rows="5" name="clean_ips" style="display: none" class="form-control" id="clean-ips">${cleanDomainIPs.join("\n")}</textarea>
             <div id="clean-ips-remarks" style="display: none" class="form-text"></div>
             <div>
-<<<<<<< HEAD
-              <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ip-scanner-modal">
-                Find clean IPs / \u067E\u06CC\u062F\u0627 \u06A9\u0631\u062F\u0646 \u0622\u06CC\u200C\u067E\u06CC \u062A\u0645\u06CC\u0632
-              </button>
-=======
               <button id="clean-ips-btn-title" type="button" style="display: none" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ip-scanner-modal"></button>
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
               <div class="modal fade" id="ip-scanner-modal" tabindex="-1" aria-labelledby="ip-scanner-modal-label" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-scrollable">
                   <div class="modal-content">
                     <div class="modal-header">
-<<<<<<< HEAD
-                      <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                        Close / \u0628\u0633\u062A\u0646  
-                      </button>
-=======
                       <button id="clean-ips-btn-close-title" type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"></button>
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
                     </div>
                     <div class="modal-body">
                       <iframe src="https://vfarid.github.io/cf-ip-scanner/" style="width: 100%; height: 90vh;"></iframe>
@@ -5000,33 +4897,12 @@ async function GetPanel(request, env) {
         </div>
       </div>
     </body>
-    <script>
-      window.addEventListener('message', function (event) {
-        document.getElementById('clean-ip').value = event.data;
-      });
-    <\/script>
     </html>
     `;
     return new Response(htmlContent, {
       headers: { "Content-Type": "text/html" }
     });
   } catch (e) {
-<<<<<<< HEAD
-    const htmlContent2 = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf8" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-      </head>
-      <body dir="ltr">
-        <div class="container border p-0">
-          <div class="p-1 bg-primary text-white">
-            <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
-            <div class="text-nowrap fs-6 text-center">
-              Version 2.6 by
-              <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
-=======
     if (e instanceof TypeError) {
       const htmlContent2 = `
       <!DOCTYPE html>
@@ -5084,7 +4960,6 @@ async function GetPanel(request, env) {
                 </svg>
                 <a class="link-dark link-offset-2" href="https://github.com/vfarid" target="_blank">vfarid</a>            </p>
               </div>
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
             </div>
           </div>
         </body>
@@ -5264,14 +5139,9 @@ async function GetLogin(request, env) {
     <body dir="ltr">
       <div class="container border p-0">
         <div class="p-3 bg-primary text-white">
-          <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
+          <div class="text-nowrap fs-4 fw-bold text-center">V2RAY Worker - Control Panel</div>
           <div class="text-nowrap fs-6 text-center">
-<<<<<<< HEAD
-            Version 2.6 by
-            <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
-=======
             Version ${version}
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
           </div>
         </div>
         ${htmlMessage}
@@ -8032,28 +7902,8 @@ function MixConfig(cnf, url, address, provider) {
     if (addr.toLocaleLowerCase().endsWith(".workers.dev") || addr.toLocaleLowerCase().endsWith(".pages.dev")) {
       throw new Error("Config is running on Cloudflare, Skipped!");
     }
-<<<<<<< HEAD
-    if (!conf.port) {
-      conf.port = 443;
-    }
-    if (!cfHttpPorts.includes(conf.port)) {
-      return null;
-    }
-    if (addr.toLocaleLowerCase().endsWith(".workers.dev") && conf.path) {
-      return null;
-    }
-    conf.name = conf.name + "-worker";
-    const path = conf["ws-opts"]?.path || conf.path;
-    conf["ws-opts"] = {
-      path: "",
-      headers: {
-        Host: hostname
-      }
-    };
-=======
     conf.remarks = conf.remarks + "-worker";
     const path = conf.path;
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
     conf.host = hostname;
     conf.sni = hostname;
     conf.address = address;
@@ -8074,15 +7924,8 @@ function EncodeConfig(conf) {
         port: conf.port,
         id: conf.uuid,
         aid: conf.alterId || 0,
-<<<<<<< HEAD
-        cipher: conf.cipher || "none",
-        tls: conf.tls ? "tls" : null,
-        "skip-cert-verify": false,
-        sni: conf.servername,
-=======
         tls: conf.tls,
         sni: conf.sni,
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
         net: conf.network,
         path: conf.path,
         host: conf.host,
@@ -8111,18 +7954,10 @@ function DecodeConfig(configStr) {
         port: parseInt(conf?.port || (conf?.tls == "tls" ? "443" : "80")),
         uuid: conf.id,
         alterId: conf?.aid || 0,
-<<<<<<< HEAD
-        cipher: conf?.cipher || "auto",
-        tls: conf?.tls == "tls",
-        "skip-cert-verify": false,
-        servername: conf?.sni || conf?.host,
-        network: conf?.net,
-=======
         security: conf?.scy || "auto",
         network,
         type: type2 == network ? "" : type2,
         host: conf?.host,
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
         path: conf?.path || "",
         tls: conf?.tls || "",
         sni: conf?.sni || conf?.host
@@ -8135,33 +7970,6 @@ function DecodeConfig(configStr) {
       const network = url.searchParams.get("network") || url.searchParams.get("type") || "tcp";
       const type2 = url.searchParams.get("type") || "";
       conf = {
-<<<<<<< HEAD
-        name: match.groups.ps,
-        server: match.groups.server,
-        port: match.groups.port || 443,
-        type: match.groups.type,
-        uuid: match.groups.id,
-        alterId: optionsObj.aid || 0,
-        cipher: "auto",
-        security: optionsObj.security || "",
-        tls: (optionsObj.security || "none") == "tls",
-        "skip-cert-verify": false,
-        servername: optionsObj.sni || "",
-        network: optionsObj.type || (optionsObj.net || "tcp"),
-        path: optionsObj.path || "",
-        host: optionsObj.host || optionsObj.Host || "",
-        alpn: optionsObj.alpn || "",
-        fp: optionsObj.fp || "",
-        pbk: optionsObj.pbk || "",
-        headerType: optionsObj.headerType || "",
-        "ws-opts": {
-          path: optionsObj.path || "",
-          headers: {
-            Host: optionsObj.host || optionsObj.sni
-          }
-        },
-        udp: true
-=======
         configType: "vless",
         remarks: decodeURIComponent(url.hash.substring(1)),
         address: url.hostname,
@@ -8186,7 +7994,6 @@ function DecodeConfig(configStr) {
         key: url.searchParams.get("key") || "",
         mode: url.searchParams.get("mode") || "",
         authority: url.searchParams.get("authority") || ""
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
       };
     } catch (e) {
     }

@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer'
 import { IsIp, IsValidUUID, MuddleDomain } from "./helpers"
-import { cfHttpPorts, supportedCiphers } from "./variables"
+import { cfPorts, supportedCiphers } from "./variables"
 import { Config } from "./interfaces"
 
 export function MixConfig(cnf: Config, url: URL, address: string, provider: string): Config | null {
@@ -18,13 +18,8 @@ export function MixConfig(cnf: Config, url: URL, address: string, provider: stri
 			throw new Error("Invalid SNI!")
 		}
 
-<<<<<<< HEAD
-		if (!cfHttpPorts.includes(conf.port)) {
-			return null
-=======
 		if (addr.toLocaleLowerCase().endsWith('.workers.dev') || addr.toLocaleLowerCase().endsWith('.pages.dev')) {
 			throw new Error("Config is running on Cloudflare, Skipped!")
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
 		}
 
 		conf.remarks = conf.remarks + "-worker"
@@ -50,15 +45,8 @@ export function EncodeConfig(conf: Config): string {
         port: conf.port,
         id: conf.uuid,
         aid: conf.alterId || 0,
-<<<<<<< HEAD
-        cipher: conf.cipher || "none",
-        tls: conf.tls ? "tls" : null,
-        "skip-cert-verify": false,
-        sni: conf.servername,
-=======
         tls: conf.tls,
         sni: conf.sni,
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
         net: conf.network,
         path: conf.path,
         host: conf.host,
@@ -196,18 +184,10 @@ export function DecodeConfig(configStr: string): Config {
         port: parseInt(conf?.port || (conf?.tls == "tls" ? "443" : "80")),
         uuid: conf.id,
         alterId: conf?.aid || 0,
-<<<<<<< HEAD
-        cipher: conf?.cipher || "auto",
-        tls: conf?.tls == "tls",
-        "skip-cert-verify": false,
-        servername: conf?.sni || conf?.host,
-        network: conf?.net,
-=======
         security: conf?.scy || "auto",
         network: network,
         type: type == network ? "" : type,
         host: conf?.host,
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
         path: conf?.path || "",
         tls: conf?.tls || "",
         sni: conf?.sni || conf?.host,
@@ -219,33 +199,6 @@ export function DecodeConfig(configStr: string): Config {
       const network = url.searchParams.get('network') || url.searchParams.get('type') || "tcp"
       const type = url.searchParams.get('type') || ""
       conf = {
-<<<<<<< HEAD
-        name: match.groups.ps,
-        server: match.groups.server,
-        port: match.groups.port || 443,
-        type: match.groups.type,
-        uuid: match.groups.id,
-        alterId: optionsObj.aid || 0,
-        cipher: "auto",
-        security: optionsObj.security || "",
-        tls: (optionsObj.security || "none") == "tls",
-        "skip-cert-verify": false,
-        servername: optionsObj.sni || "",
-        network: optionsObj.type || (optionsObj.net || "tcp"),
-        path: optionsObj.path || "",
-        host: optionsObj.host || optionsObj.Host || "",
-        alpn: optionsObj.alpn || "",
-        fp: optionsObj.fp || "",
-        pbk: optionsObj.pbk || "",
-        headerType: optionsObj.headerType || "",
-        "ws-opts": {
-          path: optionsObj.path || "",
-          headers: {
-            Host: optionsObj.host || optionsObj.sni,
-          }
-        },
-        udp: true,
-=======
         configType: "vless",
         remarks: decodeURIComponent(url.hash.substring(1)),
         address: url.hostname,
@@ -270,7 +223,6 @@ export function DecodeConfig(configStr: string): Config {
         key: url.searchParams.get('key') || "",
         mode: url.searchParams.get('mode') || "",
         authority: url.searchParams.get('authority') || "",
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
       } as Config
 	  } catch (e) {
       // console.log(e, configStr)

@@ -21,14 +21,9 @@ export async function GetLogin(request: Request, env: Env): Promise<Response> {
     <body dir="ltr">
       <div class="container border p-0">
         <div class="p-3 bg-primary text-white">
-          <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
+          <div class="text-nowrap fs-4 fw-bold text-center">V2RAY Worker - Control Panel</div>
           <div class="text-nowrap fs-6 text-center">
-<<<<<<< HEAD
-            Version 2.6 by
-            <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
-=======
             Version ${version}
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
           </div>
         </div>
         ${htmlMessage}

@@ -276,22 +276,12 @@ export async function GetPanel(request: Request, env: Env): Promise<Response> {
         }
       </script>
     </head>
-<<<<<<< HEAD
-    <body dir="ltr">
-      <div class="container border p-0">
-        <div class="p-1 bg-primary text-white">
-          <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
-          <div class="text-nowrap fs-6 text-center">
-            Version 2.6 by
-            <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
-=======
     <body id="body" style="--bs-body-font-size: .875rem">
       <div class="container border mt-3 p-0 border-primary border-2 rounded">
         <div id="lang-group" class="btn-group m-2" role="group" dir="ltr"></div>
         <div class="p-2 border-bottom border-primary border-2">
           <div class="text-nowrap fs-5 fw-bold text-dark">
             <span id="page-title"></span> &nbsp;&nbsp;<span class="text-nowrap fs-6 text-info"><span id="text-version"></span> ${version}</span>
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
           </div>
         </div>
         ${htmlMessage}
@@ -437,22 +427,6 @@ export async function GetPanel(request: Request, env: Env): Promise<Response> {
       headers: {"Content-Type": "text/html"},
     })
   } catch (e) {
-<<<<<<< HEAD
-    const htmlContent = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf8" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-      </head>
-      <body dir="ltr">
-        <div class="container border p-0">
-          <div class="p-1 bg-primary text-white">
-            <div class="text-nowrap fs-4 fw-bold text-center">Free StableConnectionVPN - Control Panel</div>
-            <div class="text-nowrap fs-6 text-center">
-              Version 2.6 by
-              <a href="https://twitter.com/sma_abyar" target="_blank" class="text-white">SMA A</a>
-=======
     if (e instanceof TypeError) {
       const htmlContent = `
       <!DOCTYPE html>
@@ -510,7 +484,6 @@ export async function GetPanel(request: Request, env: Env): Promise<Response> {
                 </svg>
                 <a class="link-dark link-offset-2" href="https://github.com/vfarid" target="_blank">vfarid</a>            </p>
               </div>
->>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
             </div>
           </div>
         </body>
