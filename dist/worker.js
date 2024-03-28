@@ -3979,13 +3979,22 @@ var defaultPFList = [
   "android",
   "randomized"
 ];
-var cfPorts = [
+var tlsPorts = [
   443,
   2053,
   2083,
   2087,
   2096,
   8443
+];
+var notlsPorts = [
+  80,
+	8080,
+	8880,
+	2052,
+	2082,
+	2086,
+  2095,
 ];
 var fragmentsLengthList = [
   "10-20",
@@ -4057,12 +4066,30 @@ function IsIp(str2) {
 function IsValidUUID(uuid2) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid2);
 }
-function GetVlessConfig(no, uuid2, sni, address, port) {
+function GetVlessnoTLSConfig(no, uuid2, sni, address, port) {
   if (address.toLowerCase() == sni.toLowerCase()) {
     address = sni;
   }
   return {
-    remarks: `${no}-vless-worker-${address}`,
+    remarks: `${no}-vless-worker-noTLS`,
+    configType: "vless",
+    security: "none",
+    tls: "none",
+    network: "ws",
+    port,
+    sni,
+    uuid: uuid2,
+    host: sni,
+    path: "vless-ws/?ed=2048",
+    address
+  };
+}
+function GetVlessTLSConfig(no, uuid2, sni, address, port) {
+  if (address.toLowerCase() == sni.toLowerCase()) {
+    address = sni;
+  }
+  return {
+    remarks: `${no}-vless-worker-TLS`,
     configType: "vless",
     security: "tls",
     tls: "tls",
@@ -4128,12 +4155,19 @@ async function GetVlessConfigList(sni, addressList, max, env) {
   uuid = getUUID(sni);
   let configList = [];
   for (let i = 0; i < max; i++) {
-    configList.push(GetVlessConfig(
+    configList.push(GetVlessTLSConfig(
       i + 1,
       uuid,
       MuddleDomain(sni),
       addressList[Math.floor(Math.random() * addressList.length)],
-      cfPorts[Math.floor(Math.random() * cfPorts.length)]
+      tlsPorts[Math.floor(Math.random() * tlsPorts.length)]
+    ));
+    configList.push(GetVlessnoTLSConfig(
+      i + 1,
+      uuid,
+      MuddleDomain(sni),
+      addressList[Math.floor(Math.random() * addressList.length)],
+      notlsPorts[Math.floor(Math.random() * notlsPorts.length)]
     ));
   }
   return configList;
@@ -7892,7 +7926,7 @@ function MixConfig(cnf, url, address, provider) {
     let conf = { ...cnf };
     if (!["ws", "h2", "http"].includes(conf.network)) {
       throw new Error("Network is not supported!");
-    } else if (!cfPorts.includes(conf.port)) {
+    } else if (!tlsPorts.includes(conf.port)) {
       throw new Error("Port is not matched!");
     }
     let addr = conf.sni || conf.host || conf.address;

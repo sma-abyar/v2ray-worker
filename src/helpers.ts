@@ -53,7 +53,7 @@ export function GetVlessnoTLSConfig(no: number, uuid: UUID, sni: string, address
 		remarks: `${no}-vless-worker`,
 		configType: "vless",
 		security: "tls",
-		tls: "tls",
+		tls: "false",
 		network: "ws",
 		port: port,
 		sni: sni,
