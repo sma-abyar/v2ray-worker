@@ -1,5 +1,7 @@
 import { UUID } from "crypto"
-import { Config } from "./interfaces"
+import { v5 as uuidv5 } from "uuid"
+import { Env, Config } from "./interfaces"
+import { providersUri, proxiesUri } from "./variables"
 
 export function GetMultipleRandomElements(arr: Array<any>, num: number): Array<any> {
 	let shuffled = arr.sort(() => 0.5 - Math.random())
@@ -36,26 +38,24 @@ export function GetVlessConfig(no: number, uuid: UUID, sni: string, address: str
 		configName = `${no}-vless-NoTLS-Free-StableConnectionVPN`;
 	}
   return {
+<<<<<<< HEAD
 		name: configName,
 		type: "vless",
 		tls: TLS,
+=======
+		remarks: `${no}-vless-worker-${address}`,
+		configType: "vless",
+		security: "tls",
+		tls: "tls",
+>>>>>>> 5da00613d551eb82dee5233d1a262f5453b1a6b7
 		network: "ws",
 		port: port,
-		servername: sni,
+		sni: sni,
 		uuid: uuid,
-		fp: "randomized",
-		alpn: "h2,http/1.1",
 		host: sni,
-		"ws-opts": {
-			path: "vless-ws/?ed=2048",
-			headers: {
-				Host: sni,
-			},
-		},
-		server: address,
 		path: "vless-ws/?ed=2048",
+		address: address,
 	} as Config
-	// return `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${sni}&fp=${fp}&alpn=${alpn}&type=ws&host=${sni}&path=vless-ws%2F%3Fed%3D2048#${no}-vless-worker-${address}`
 }
 
 export function IsBase64(str: string): boolean {
@@ -66,7 +66,7 @@ export function RemoveDuplicateConfigs(configList: Array<Config>): Array<Config>
   const seen: { [key: string]: boolean } = {}
 
   return configList.filter((conf: Config) => {
-    const key = conf.name + conf.port + conf.server + (conf.uuid || conf.password)
+    const key = conf.remarks + conf.port + conf.address + conf.uuid
     if (!seen[key]) {
       seen[key] = true
       return true
@@ -79,7 +79,7 @@ export function AddNumberToConfigs(configList: Array<Config>, start: number): Ar
   const seen: { [key: string]: boolean } = {}
 
   return configList.map((conf: Config, index: number) => {
-    conf.name = (index + start) + "-" + conf.name 
+    conf.remarks = (index + start) + "-" + conf.remarks 
     return conf
   })
 }
@@ -106,4 +106,30 @@ export function MuddleDomain(hostname: string): string {
   ).join("")
   
   return subdomain + "." + muddledDomain
+}
+
+export async function getDefaultProviders(): Promise<Array<string>> {
+	return fetch(providersUri).then(r => r.text()).then(t => t.trim().split("\n"))
+}
+
+export async function getDefaultProxies(): Promise<Array<string>> {
+	return fetch(proxiesUri).then(r => r.text()).then(t => t.trim().split("\n").filter(t => t.trim().length > 0))
+}
+
+export async function getProxies(env: Env): Promise<Array<string>> {
+	let proxyIPList: Array<string> = []
+    try {
+      proxyIPList = (await env.settings.get("Proxies"))?.trim().split("\n").filter(t => t.trim().length > 0) || []
+    } catch (e) {
+      // Ignore
+    }
+    if (!proxyIPList.length) {
+      proxyIPList = await getDefaultProxies()
+    }
+
+	return proxyIPList
+}
+
+export function getUUID(sni: string) : string {
+  return uuidv5(sni.toLowerCase(), "ebc4a168-a6fe-47ce-bc25-6183c6212dcc")
 }
