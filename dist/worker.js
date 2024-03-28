@@ -8047,7 +8047,7 @@ function ValidateConfig(conf) {
 // src/collector.ts
 async function GetConfigList(url, env) {
   let maxConfigs = 200;
-  const maxVlessConfigs = 20;
+  const maxVlessConfigs = 10;
   let protocols = [];
   let providers = [];
   let alpnList = [];
