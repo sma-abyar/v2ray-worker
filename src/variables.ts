@@ -1,4 +1,4 @@
-export const version: string = "2.3"
+export const version: string = "2.4"
 export const providersUri: string = "https://raw.githubusercontent.com/vfarid/v2ray-worker/main/resources/provider-list.txt"
 export const proxiesUri: string = "https://raw.githubusercontent.com/vfarid/v2ray-worker/main/resources/proxy-list.txt"
 
@@ -31,13 +31,23 @@ export const defaultPFList: Array<string> = [
   "randomized",
 ]
 
-export const cfPorts: Array<number> = [
+export const tlsPorts: Array<number> = [
 	443,
 	2053,
 	2083,
 	2087,
 	2096,
 	8443,
+]
+
+export const notlsPorts: Array<number> = [
+	80,
+	8080,
+	8880,
+	2052,
+	2082,
+	2086,
+  2095,
 ]
 
 export const supportedCiphers: Array<string> = [

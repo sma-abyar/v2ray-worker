@@ -32,7 +32,7 @@ export function GetVlessConfig(no: number, uuid: UUID, sni: string, address: str
     address = sni
   }
   return {
-		remarks: `${no}-vless-worker-${address}`,
+		remarks: `${no}-vless-worker`,
 		configType: "vless",
 		security: "tls",
 		tls: "tls",

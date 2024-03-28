@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer'
 import { IsIp, IsValidUUID, MuddleDomain } from "./helpers"
-import { cfPorts, supportedCiphers } from "./variables"
+import { tlsPorts, supportedCiphers } from "./variables"
 import { Config } from "./interfaces"
 
 export function MixConfig(cnf: Config, url: URL, address: string, provider: string): Config | null {
@@ -9,7 +9,7 @@ export function MixConfig(cnf: Config, url: URL, address: string, provider: stri
 		let conf = {...cnf};
 		if (!["ws", "h2", "http"].includes(conf.network)) {
 			throw new Error("Network is not supported!")
-		} else if (!cfPorts.includes(conf.port)) {
+		} else if (!tlsPorts.includes(conf.port)) {
 			throw new Error("Port is not matched!")
 		}
 

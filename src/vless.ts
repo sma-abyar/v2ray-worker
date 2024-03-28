@@ -1,7 +1,8 @@
 import { UUID } from "crypto";
 import { connect } from 'cloudflare:sockets'
 import { GetVlessConfig, MuddleDomain, getProxies, getUUID } from "./helpers"
-import { cfPorts } from "./variables"
+import { tlsPorts } from "./variables"
+import { notlsPorts } from "./variables"
 import { RemoteSocketWrapper, CustomArrayBuffer, VlessHeader, UDPOutbound, Config, Env } from "./interfaces"
 
 const WS_READY_STATE_OPEN: number = 1
@@ -19,7 +20,7 @@ export async function GetVlessConfigList(sni: string, addressList: Array<string>
       uuid as UUID,
       MuddleDomain(sni),
       addressList[Math.floor(Math.random() * addressList.length)],
-      cfPorts[Math.floor(Math.random() * cfPorts.length)]
+      tlsPorts[Math.floor(Math.random() * tlsPorts.length)]
     ))
   }
 
