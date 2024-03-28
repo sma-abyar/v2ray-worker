@@ -1,4 +1,4 @@
-export const version: string = "2.4"
+export const version: string = "3.0"
 export const providersUri: string = "https://raw.githubusercontent.com/vfarid/v2ray-worker/main/resources/provider-list.txt"
 export const proxiesUri: string = "https://raw.githubusercontent.com/vfarid/v2ray-worker/main/resources/proxy-list.txt"
 
