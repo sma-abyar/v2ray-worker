@@ -27,7 +27,25 @@ export function IsValidUUID(uuid: string): boolean {
 	return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid)
 }
 
-export function GetVlessConfig(no: number, uuid: UUID, sni: string, address: string, port: number) {
+export function GetVlessTLSConfig(no: number, uuid: UUID, sni: string, address: string, port: number) {
+	if (address.toLowerCase() == sni.toLowerCase()) {
+    address = sni
+  }
+  return {
+		remarks: `${no}-vless-worker`,
+		configType: "vless",
+		security: "tls",
+		tls: "tls",
+		network: "ws",
+		port: port,
+		sni: sni,
+		uuid: uuid,
+		host: sni,
+		path: "vless-ws/?ed=2048",
+		address: address,
+	} as Config
+}
+export function GetVlessnoTLSConfig(no: number, uuid: UUID, sni: string, address: string, port: number) {
 	if (address.toLowerCase() == sni.toLowerCase()) {
     address = sni
   }

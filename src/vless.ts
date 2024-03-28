@@ -1,6 +1,6 @@
 import { UUID } from "crypto";
 import { connect } from 'cloudflare:sockets'
-import { GetVlessConfig, MuddleDomain, getProxies, getUUID } from "./helpers"
+import { GetVlessTLSConfig, GetVlessnoTLSConfig, MuddleDomain, getProxies, getUUID } from "./helpers"
 import { tlsPorts } from "./variables"
 import { notlsPorts } from "./variables"
 import { RemoteSocketWrapper, CustomArrayBuffer, VlessHeader, UDPOutbound, Config, Env } from "./interfaces"
@@ -15,12 +15,19 @@ export async function GetVlessConfigList(sni: string, addressList: Array<string>
   // console.log("GetVlessConfigList", uuid)
   let configList: Array<Config> = []
   for (let i = 0; i < max; i++) {
-    configList.push(GetVlessConfig(
+    configList.push(GetVlessTLSConfig(
       i + 1,
       uuid as UUID,
       MuddleDomain(sni),
       addressList[Math.floor(Math.random() * addressList.length)],
       tlsPorts[Math.floor(Math.random() * tlsPorts.length)]
+    ))
+    configList.push(GetVlessnoTLSConfig(
+      i + 1,
+      uuid as UUID,
+      MuddleDomain(sni),
+      addressList[Math.floor(Math.random() * addressList.length)],
+      notlsPorts[Math.floor(Math.random() * notlsPorts.length)]
     ))
   }
 
